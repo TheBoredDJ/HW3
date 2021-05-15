@@ -11,11 +11,14 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
 
+generateBtn.addEventListener("click", writePassword);
 
 var length = Number(prompt("How many characters would you like your password to be?"));
 while (isNaN(length) || length < 8 || length > 128) length = Number(prompt("Length must be 8-128 characters. How many characters would you like your password to be?"));
+
+// Added this to see if variable was getting right number
+//document.write(length)
 
 var uppers = confirm("Would you like to use uppercase letters?");
 var lowers = confirm("Would you like to use lowercase letters?");
@@ -30,9 +33,7 @@ while (!uppers && !lowers && !numbers && !symbols) {
   symbols = confirm("Would you like to use special characters?");
 }
 
-window.addEventListener('load', function() {
-  generateNewPassword();
-});
+window.addEventListener('load', function() {generateNewPassword()});
 
 function generateNewPassword() {
   var password = "";
@@ -44,24 +45,25 @@ function generateNewPassword() {
   if (symbols) password += rando(allowed.symbols = "!@#$%^&*(){}[]=<>/,.");
 
   for (var i = password.length; i < length; i++) password += rando(rando(allowed).value);
-
-  document.getElementById("password").value = randoSequence(password).join("");}
-
   
-generateBtn.addEventListener("click", generatePassword);
+  document.getElementById("password").value = randoSequence(password).join("");
+}
+  
+generate.addEventListener("click", generatePassword);
 
 function generatePassword() {
 
   var pass = '';
   var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 
           'abcdefghijklmnopqrstuvwxyz0123456789@#$';
-    
-  for (i = 1; i <= 8; i++) {
-      var char = Math.floor(Math.random()
-                  * str.length + 1);
+
+// Made change here, changed i = 1 to i = 0, and i <= 8 to i < length	
+// Searched this page to get the answer, too 3 hours
+// https://stackoverflow.com/questions/1497481/javascript-password-generator answer 29
+  for (i = 0; i < length; i++) {
+      var char = Math.floor(Math.random() * str.length + 1);
         
       pass += str.charAt(char)
   }
-  
-    
-  return pass;}
+  return pass
+};
